@@ -44,6 +44,7 @@ class Token188 {
             'body' => $order['trade_no'],
             'coinName' => 'USDT-TRC20',
             'notifyUrl' => $order['notify_url'],
+			'callBackUrl' => $order['return_url'],
             'timestamp' => $this->msectime(),
             'nonceStr' => $this->getNonceStr(16)
         ];
