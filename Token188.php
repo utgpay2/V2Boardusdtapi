@@ -34,8 +34,8 @@ class Token188 {
     }
 
     public function pay($order) {
-		
-		$params = [
+        
+        $params = [
             'merchantId' => $this->config['token188_mchid'],
             'outTradeNo' => $order['trade_no'],
             'subject' => $order['trade_no'],
@@ -44,7 +44,7 @@ class Token188 {
             'body' => $order['trade_no'],
             'coinName' => 'USDT-TRC20',
             'notifyUrl' => $order['notify_url'],
-			'callBackUrl' => $order['return_url'],
+            'callBackUrl' => $order['return_url'],
             'timestamp' => $this->msectime(),
             'nonceStr' => $this->getNonceStr(16)
         ];
@@ -58,29 +58,29 @@ class Token188 {
         if(empty($ret['data']['paymentUrl'])) {
             abort(500, $ret["msg"]);
         }
-		return [
-			'type' => 1, // Redirect to url
-			'data' => $ret['data']['paymentUrl'],
-		];
-		
+        return [
+            'type' => 1, // Redirect to url
+            'data' => $ret['data']['paymentUrl'],
+        ];
+        
     }
 
     public function notify($params) {
         $content = file_get_contents('php://input');
-		//$content = file_get_contents('php://input', 'r');
+        //$content = file_get_contents('php://input', 'r');
 
-		$json_param = json_decode($content, true); //convert JSON into array
-		$coinPay_sign = $json_param['sign'];
-		unset($json_param['sign']);
-		unset($json_param['notifyId']);
-		$sign = self::GetSign($this->config['token188_key'], $json_param);
-		if ($sign !== $coinPay_sign) {
-			echo json_encode(['status' => 400]);
-			return false;
-		}
-		$out_trade_no = $json_param['outTradeNo'];
-		$pay_trade_no=$json_param['tradeNo'];
-		
+        $json_param = json_decode($content, true); //convert JSON into array
+        $coinPay_sign = $json_param['sign'];
+        unset($json_param['sign']);
+        unset($json_param['notifyId']);
+        $sign = self::GetSign($this->config['token188_key'], $json_param);
+        if ($sign !== $coinPay_sign) {
+            echo json_encode(['status' => 400]);
+            return false;
+        }
+        $out_trade_no = $json_param['outTradeNo'];
+        $pay_trade_no=$json_param['tradeNo'];
+        
         return [
             'trade_no' => $out_trade_no,
             'callback_no' => $pay_trade_no
@@ -89,21 +89,21 @@ class Token188 {
 
    
 
-	
-	public function GetSign($secret, $params)
+    
+    public function GetSign($secret, $params)
     {
-		
+        
         $p=ksort($params);
         reset($params);
 
-		if ($p) {
-			$str = '';
-			foreach ($params as $k => $val) {
-				$str .= $k . '=' .  $val . '&';
-			}
-			$strs = rtrim($str, '&');
-		}
-		$strs .='&key='.$secret;
+        if ($p) {
+            $str = '';
+            foreach ($params as $k => $val) {
+                $str .= $k . '=' .  $val . '&';
+            }
+            $strs = rtrim($str, '&');
+        }
+        $strs .='&key='.$secret;
         
         $signature = md5($strs);
 
@@ -111,9 +111,9 @@ class Token188 {
         return $signature;
     }
     public function msectime() {
-		list($msec, $sec) = explode(' ', microtime());
-		$msectime = (float)sprintf('%.0f', (floatval($msec) + floatval($sec)) * 1000);
-		return $msectime;
+        list($msec, $sec) = explode(' ', microtime());
+        $msectime = (float)sprintf('%.0f', (floatval($msec) + floatval($sec)) * 1000);
+        return $msectime;
     }
     /**
      * 返回随机字符串
@@ -132,7 +132,7 @@ class Token188 {
 
     private function _curlPost($url,$params=false,$signature,$ispost=0){
         
-		$ch = curl_init();
+        $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -147,6 +147,6 @@ class Token188 {
         curl_close($ch);
         return $result;
     }
-	
-	
+    
+    
 }
