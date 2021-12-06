@@ -5,17 +5,15 @@ V2Board usdt支付插件 点对点个人对个人 没有中间商 无手续费 �
 ```
 1. 下载 SDK
 下载token188.php，并上传到面板app/Payments目录中
-
-2. 添加 Token188 支付方式
-面板管理后台 > 系统配置 > 站点 
- 添加你的网站域名，不然在后面添加支付会提示失败
-面板管理后台 > 支付配置 > + 添加支付方式
-
-显示名称	Token188支付
-接口文件	Token188
-接口地址	https://api.token188.com/utg/pay/address
-商户ID	
-商户密钥	
+2. 面板管理后台 > 系统配置 > 站点 
+    添加你的网站域名，不然在后面添加支付会提示失败
+3. 添加 Token188 支付方式
+    面板管理后台 > 支付配置 > + 添加支付方式
+    显示名称	Token188支付
+    接口文件	Token188
+    接口地址	https://api.token188.com/utg/pay/address
+    商户ID	
+    商户密钥	
 3. 启用该支付方式
 ```
 - 商户ID, 商户密钥  请到[TOKEN188](https://www.token188.com/) 官网注册获取.
